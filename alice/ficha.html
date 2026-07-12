@@ -1,1 +1,51 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ficha · A Morada</title><link rel="stylesheet" href="../shared/styles.css"></head><body class="hub-page"><main class="sheet placeholder-sheet"><a class="back-link" href="index.html">← Voltar ao arquivo</a><section class="placeholder-content"><p class="kicker">Prontuário 01</p><h1>Ficha</h1><span class="empty-stamp">Conteúdo não revelado</span><p>A ficha completa de Mannon será construída em uma etapa futura.</p></section></main></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ficha de Mannon · A Morada</title><link rel="stylesheet" href="../shared/styles.css"></head>
+<body class="hub-page" data-page="alice-sheet">
+  <div class="desk wide-desk">
+    <header class="site-header"><a class="site-mark" href="index.html">← Arquivo de Alice</a><p class="file-id">Prontuário de Mannon<br>registro ativo</p></header>
+    <main class="sheet character-sheet">
+      <section class="identity-strip">
+        <div><p class="kicker">Sujeito registrado</p><h1 class="sheet-name">Mannon</h1><p class="occupation">Fotógrafa · Viksdal</p></div>
+        <div class="resource-grid" data-character-resources>
+          <article class="resource"><span>Vida</span><strong data-health>6 / 6</strong><small data-health-state>Íntegra</small></article>
+          <article class="resource"><span>Sanidade</span><strong data-sanity>20 / 20</strong><small data-sanity-state>Funcional</small></article>
+          <article class="resource"><span>Filmes da Polaroid</span><strong data-films>13 / 13</strong><small>exposições restantes</small></article>
+          <article class="resource location-resource"><span>Localização atual</span><strong data-location>Entrada de Viksdal</strong></article>
+        </div>
+      </section>
+
+      <section class="sheet-columns">
+        <div>
+          <section class="record-section"><div class="section-heading"><p class="kicker">Valores independentes</p><h2>Atributos</h2></div><div class="stat-list" data-attributes>
+            <div><strong>VER</strong><span>+3</span></div><div><strong>AGUENTAR</strong><span>+2</span></div><div><strong>LEMBRAR</strong><span>+2</span></div><div><strong>CEDER</strong><span>+1</span></div><div><strong>CRIAR</strong><span>+4</span></div><div><strong>FUGIR</strong><span>+2</span></div>
+          </div><p class="rule-note">Cada teste usa somente um destes valores. Atributo e perícia nunca são somados.</p></section>
+          <section class="record-section"><div class="section-heading"><p class="kicker">Conhecimentos</p><h2>Perícias</h2></div><div class="stat-list" data-skills>
+            <div><strong>Fotografia</strong><span>+2</span></div><div><strong>Pintura</strong><span>+1</span></div><div><strong>Percepção de detalhes</strong><span>+1</span></div><div><strong>Memória afetiva</strong><span>+1</span></div><div><strong>Esconder-se</strong><span>+1</span></div>
+          </div></section>
+          <section class="record-section"><div class="section-heading"><p class="kicker">Estado observado</p><h2>Condições</h2></div><div class="condition-list" data-conditions><p class="empty-note">Nenhuma condição ativa.</p></div></section>
+        </div>
+
+        <div>
+          <section class="record-section requested-test" data-request-panel>
+            <div class="section-heading"><p class="kicker">Transmissão do Mestre</p><h2>Teste solicitado</h2></div>
+            <div data-no-request><p class="empty-note">Nenhum teste aguardando.</p></div>
+            <div data-active-request hidden><p class="test-name" data-request-name>VER</p><p>Dificuldade: <strong data-request-difficulty>15</strong></p><button class="ink-button roll-button" type="button" data-roll-request>Rolar d20</button><div class="roll-result" data-roll-result hidden></div></div>
+            <p class="status-line" data-dice-state>Aguardando instrução.</p>
+          </section>
+          <section class="record-section"><div class="section-heading"><p class="kicker">Dados avulsos</p><h2>Rolagem livre</h2></div><form class="free-dice" data-free-dice-form><label for="free-die">Dado</label><select id="free-die" name="sides"><option>4</option><option>5</option><option>6</option><option>8</option><option>10</option><option>12</option><option selected>20</option><option>100</option></select><button class="ink-button" type="submit">Rolar</button><output data-free-result>—</output></form></section>
+          <section class="record-section"><div class="section-heading"><p class="kicker">Imagens alteradas</p><h2>Polaroids especiais</h2></div><div class="photo-grid compact-photos" data-special-polaroids><p class="empty-note">Nenhuma Polaroid foi revelada.</p></div><a class="text-link" href="polaroid.html">Abrir álbum completo →</a></section>
+        </div>
+      </section>
+
+      <section class="record-section gallery-section">
+        <div class="section-heading"><p class="kicker">Câmera digital</p><h2>Galeria digital</h2><p>Estas imagens não consomem filme e não concedem habilidades.</p></div>
+        <details class="photo-form-wrap"><summary>+ Adicionar foto</summary><form class="photo-form" data-photo-form><label>URL da imagem<input type="url" name="image_url" required placeholder="https://..."></label><label>Legenda<input name="caption" maxlength="180"></label><label>Local<input name="location" maxlength="120"></label><label>Data opcional<input type="date" name="photo_date"></label><button class="ink-button" type="submit">Guardar fotografia</button><p class="status-line" data-photo-state></p></form></details>
+        <div class="photo-grid" data-digital-gallery><p class="empty-note">Nenhuma fotografia arquivada.</p></div>
+      </section>
+
+      <section class="record-section notes-preview"><div class="section-heading"><p class="kicker">Caderno pessoal</p><h2>Anotações</h2></div><p class="empty-note">As anotações completas continuam em preparação.</p><a class="text-link" href="anotacoes.html">Abrir caderno →</a></section>
+    </main>
+  </div>
+  <script src="../shared/config.js"></script><script src="../shared/app.js"></script>
+</body></html>

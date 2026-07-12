@@ -1,26 +1,27 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Arquivo do Mestre · A Morada</title><link rel="stylesheet" href="../shared/styles.css"></head>
-<body class="hub-page">
-  <div class="desk">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Arquivo do Mestre · A Morada</title><link rel="stylesheet" href="../shared/styles.css"></head>
+<body class="hub-page" data-page="master">
+  <section class="master-gate" data-master-gate><form class="gate-card" data-gate-form><p class="kicker">Acesso reservado</p><h1>Observação 09</h1><label for="master-password">Senha</label><input id="master-password" name="password" type="password" autocomplete="current-password" required><button class="ink-button" type="submit">Entrar</button><p class="status-line" data-gate-state>Alice não deveria ver este arquivo.</p></form></section>
+  <div class="desk wide-desk" data-master-app hidden>
     <header class="site-header"><a class="site-mark" href="../index.html">A Morada</a><p class="file-id">Acesso reservado<br>Observação 09</p></header>
     <main class="sheet master-sheet">
-      <section class="master-top">
-        <div><p class="kicker">Sujeito em observação</p><h1 class="subject-name">Mannon</h1><p class="subject-note">Localização atual: <strong>Entrada de Viksdal</strong></p></div>
-        <div class="vitals" aria-label="Estado atual de Mannon">
-          <div class="vital"><span>Vida</span><strong>100 / 100</strong></div><div class="vital"><span>Sanidade</span><strong>100 / 100</strong></div>
-          <div class="vital"><span>Fome</span><strong>Estável</strong></div><div class="vital"><span>Sede</span><strong>Estável</strong></div>
-          <div class="vital"><span>Filmes restantes</span><strong>06</strong></div><div class="vital"><span>Registro</span><strong>Ativo</strong></div>
-        </div>
-      </section>
-      <section class="master-tools">
-        <form class="control-note" data-message-form><label for="hub-message">Mensagem no Hub da Alice</label><textarea id="hub-message" data-message-input>A cidade ainda se lembra de você.</textarea><button class="ink-button" data-save-message type="submit">Registrar alteração</button><p class="status-line" data-master-state>Aguardando instrução.</p></form>
-        <nav class="master-nav" aria-label="Arquivo do Mestre">
-          <a href="ficha.html"><span>Ficha da Mannon</span><span>01</span></a><a href="mapa.html"><span>Mapa</span><span>02</span></a><a href="inventario.html"><span>Inventário</span><span>03</span></a><a href="documentos.html"><span>Documentos</span><span>04</span></a><a href="polaroid.html"><span>Polaroid</span><span>05</span></a><a href="eventos.html"><span>Eventos</span><span>06</span></a><a href="historico.html"><span>Histórico</span><span>07</span></a>
-        </nav>
-      </section>
+      <section class="master-top"><div><p class="kicker">Sujeito em observação</p><h1 class="subject-name">Mannon</h1><p class="subject-note">Localização: <strong data-location>Entrada de Viksdal</strong></p></div><div class="resource-grid master-resources"><article class="resource"><span>Vida</span><strong data-health>6 / 6</strong><div class="stepper"><button data-adjust="current_health" data-delta="-1">−</button><button data-adjust="current_health" data-delta="1">+</button></div></article><article class="resource"><span>Sanidade</span><strong data-sanity>20 / 20</strong><div class="stepper"><button data-adjust="current_sanity" data-delta="-1">−</button><button data-adjust="current_sanity" data-delta="1">+</button></div></article><article class="resource"><span>Filmes</span><strong data-films>13 / 13</strong><div class="stepper"><button data-adjust="films_remaining" data-delta="-1">−</button><button data-adjust="films_remaining" data-delta="1">+</button></div></article></div></section>
+
+      <div class="master-board">
+        <section class="control-panel"><div class="section-heading"><p class="kicker">Estado de Mannon</p><h2>Registro atual</h2></div><form data-location-form><label>Localização atual<input name="location" value="Entrada de Viksdal" required maxlength="160"></label><button class="ink-button" type="submit">Atualizar local</button></form><div class="condition-admin"><h3>Condições</h3><form data-condition-form><input name="condition" placeholder="Ex.: Observada" required maxlength="80"><button class="ink-button" type="submit">Adicionar</button></form><div class="condition-list" data-conditions><p class="empty-note">Nenhuma condição ativa.</p></div></div><p class="status-line" data-character-state></p></section>
+
+        <section class="control-panel"><div class="section-heading"><p class="kicker">Solicitação à Alice</p><h2>Novo teste</h2></div><form class="stacked-form" data-dice-request-form><label>Tipo<select name="stat_type"><option value="attribute">Atributo</option><option value="skill">Perícia</option></select></label><label>Valor<select name="stat_key" data-stat-select></select></label><label>Dificuldade<select name="difficulty"><option value="10">10 · Fácil</option><option value="15" selected>15 · Média</option><option value="20">20 · Difícil</option><option value="25">25 · Quase impossível</option></select></label><button class="ink-button" type="submit">Enviar teste</button></form><p class="rule-note">A rolagem usa 1d20 + apenas o valor escolhido.</p><p class="status-line" data-request-state></p></section>
+
+        <section class="control-panel last-roll"><div class="section-heading"><p class="kicker">Resposta recebida</p><h2>Última rolagem</h2></div><div data-last-roll><p class="empty-note">Nenhum resultado registrado.</p></div></section>
+
+        <section class="control-panel"><div class="section-heading"><p class="kicker">Arquivo pessoal</p><h2>Mensagem no Hub</h2></div><form data-message-form><label for="hub-message">Mensagem para Alice</label><textarea id="hub-message" data-message-input>A cidade ainda se lembra de você.</textarea><button class="ink-button" data-save-message type="submit">Registrar alteração</button><p class="status-line" data-master-state></p></form></section>
+      </div>
+
+      <section class="control-panel polaroid-control"><div class="section-heading"><p class="kicker">Câmara reservada</p><h2>Nova Polaroid especial</h2></div><form class="polaroid-form" data-polaroid-form><label>Título<input name="title" required maxlength="120"></label><label>Imagem (URL)<input type="url" name="image_url" required></label><label>Local<input name="location" maxlength="120"></label><label>Registro temporal<select name="time_record"><option>PRESENTE</option><option>PASSADO</option><option>FUTURO</option></select></label><label>Nome da habilidade<input name="ability_name" required maxlength="120"></label><label class="wide-field">Descrição da habilidade<textarea name="ability_description" required maxlength="500"></textarea></label><label>Tipo<select name="ability_type"><option>PERMANENTE</option><option>1X POR SESSÃO</option><option>CARGAS</option><option>USO ÚNICO</option></select></label><label>Usos disponíveis<input type="number" name="max_uses" min="1" max="99"></label><label class="check-field"><input type="checkbox" name="is_revealed"> Revelar imediatamente</label><button class="ink-button" type="submit">Criar Polaroid</button></form><p class="status-line" data-polaroid-state></p><div class="photo-grid" data-master-polaroids><p class="empty-note">Nenhuma Polaroid criada.</p></div></section>
+
+      <nav class="master-nav compact-nav" aria-label="Arquivo do Mestre"><a href="ficha.html"><span>Ficha da Mannon</span><span>01</span></a><a href="mapa.html"><span>Mapa provisório</span><span>02</span></a><a href="inventario.html"><span>Inventário provisório</span><span>03</span></a><a href="documentos.html"><span>Documentos provisórios</span><span>04</span></a><a href="historico.html"><span>Histórico provisório</span><span>05</span></a></nav>
     </main>
   </div>
   <script src="../shared/config.js"></script><script src="../shared/app.js"></script>
 </body></html>
-
