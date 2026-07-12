@@ -1,0 +1,7 @@
+.DS_Store
+Thumbs.db
+shared/config.js
+.env
+.env.*
+!.env.example
+
