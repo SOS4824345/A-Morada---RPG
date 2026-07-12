@@ -61,7 +61,7 @@
   }
 
   function authHeaders() {
-    return { apikey: config.supabaseAnonKey, Authorization: `Bearer ${config.supabaseAnonKey}` };
+    return { apikey: config.supabaseAnonKey };
   }
   function setState(text) { const el = document.querySelector("[data-message-state]"); if (el) el.textContent = text; }
   function setMasterState(text) { const el = document.querySelector("[data-master-state]"); if (el) el.textContent = text; }
