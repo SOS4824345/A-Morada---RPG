@@ -108,9 +108,8 @@
 
   async function loadStats() {
     try {
-      stats = await api("character_stats", "?select=*&order=id.asc");
+      stats = await api("character_stats", "?stat_type=eq.attribute&select=*&order=id.asc");
       renderStats("attribute", "[data-attributes]");
-      renderStats("skill", "[data-skills]");
       populateStatSelect();
     } catch (error) { console.warn(error); }
   }
@@ -130,19 +129,19 @@
     if (!stat) return;
     const previousValue = stat.stat_value;
     stat.stat_value = nextValue;
-    renderStats(stat.stat_type, stat.stat_type === "attribute" ? "[data-attributes]" : "[data-skills]");
+    renderStats("attribute", "[data-attributes]");
     populateStatSelect();
     setStatus("[data-sheet-save-state]", "Salvando…");
     try {
       const rows = await api("character_stats", `?id=eq.${id}`, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ stat_value: nextValue }) });
       if (!Array.isArray(rows) || rows.length !== 1) throw new Error("O Supabase não confirmou a alteração.");
       stat.stat_value = rows[0].stat_value;
-      renderStats(stat.stat_type, stat.stat_type === "attribute" ? "[data-attributes]" : "[data-skills]");
+      renderStats("attribute", "[data-attributes]");
       populateStatSelect();
       setStatus("[data-sheet-save-state]", "Salvo");
     } catch (error) {
       stat.stat_value = previousValue;
-      renderStats(stat.stat_type, stat.stat_type === "attribute" ? "[data-attributes]" : "[data-skills]");
+      renderStats("attribute", "[data-attributes]");
       populateStatSelect();
       setStatus("[data-sheet-save-state]", "Não foi possível salvar.");
       console.warn(error);
@@ -151,9 +150,10 @@
   function populateStatSelect() {
     const select = document.querySelector("[data-stat-select]");
     if (!select) return;
-    const type = document.querySelector("[data-dice-request-form] [name=stat_type]")?.value || "attribute";
-    const filtered = stats.filter((stat) => stat.stat_type === type);
+    const selectedKey = select.value;
+    const filtered = stats.filter((stat) => stat.stat_type === "attribute");
     select.innerHTML = filtered.map((stat) => `<option value="${escapeHtml(stat.stat_key)}">${escapeHtml(stat.stat_name)} +${stat.stat_value}</option>`).join("");
+    if (filtered.some((stat) => stat.stat_key === selectedKey)) select.value = selectedKey;
   }
 
   async function loadConditions() {
@@ -180,7 +180,7 @@
   async function loadPendingRequest() {
     if (!document.querySelector("[data-request-panel]")) return;
     try {
-      const rows = await api("dice_requests", "?status=eq.pending&select=*&order=created_at.desc&limit=1");
+      const rows = await api("dice_requests", "?status=eq.pending&stat_type=eq.attribute&select=*&order=created_at.desc&limit=1");
       activeRequest = rows[0] || null;
       document.querySelector("[data-no-request]").hidden = Boolean(activeRequest);
       document.querySelector("[data-active-request]").hidden = !activeRequest;
@@ -269,8 +269,7 @@
     document.querySelector("[data-location-form]")?.addEventListener("submit", (event) => { event.preventDefault(); updateCharacter({ current_location: event.currentTarget.location.value.trim() }); });
     document.querySelector("[data-condition-form]")?.addEventListener("submit", async (event) => { event.preventDefault(); const value = event.currentTarget.condition.value.trim(); if (!value) return; try { await api("character_conditions", "", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ condition_name: value }) }); event.currentTarget.reset(); loadConditions(); } catch (error) { setStatus("[data-character-state]", error.message); } });
     document.addEventListener("click", async (event) => { const button = event.target.closest("[data-remove-condition]"); if (!button) return; try { await api("character_conditions", `?id=eq.${button.dataset.removeCondition}`, { method: "DELETE", headers: { Prefer: "return=minimal" } }); loadConditions(); } catch (error) { setStatus("[data-character-state]", error.message); } });
-    document.querySelector("[data-dice-request-form] [name=stat_type]")?.addEventListener("change", populateStatSelect);
-    document.querySelector("[data-dice-request-form]")?.addEventListener("submit", async (event) => { event.preventDefault(); const values = formValues(event.currentTarget); const stat = stats.find((item) => item.stat_key === values.stat_key && item.stat_type === values.stat_type); if (!stat) return setStatus("[data-request-state]", "Escolha um valor válido."); try { await api("dice_requests", "", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ test_name: stat.stat_name, test_key: stat.stat_key, stat_type: stat.stat_type, bonus: stat.stat_value, difficulty: Number(values.difficulty) }) }); setStatus("[data-request-state]", `Teste de ${stat.stat_name} enviado para Alice.`); } catch (error) { setStatus("[data-request-state]", error.message); } });
+    document.querySelector("[data-dice-request-form]")?.addEventListener("submit", async (event) => { event.preventDefault(); const values = formValues(event.currentTarget); const difficulty = Number(values.difficulty); const stat = stats.find((item) => item.stat_key === values.stat_key && item.stat_type === "attribute"); if (!stat || !Number.isInteger(difficulty) || difficulty < 1 || difficulty > 30) return setStatus("[data-request-state]", "Escolha um atributo e uma dificuldade entre 1 e 30."); try { await api("dice_requests", "", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ test_name: stat.stat_name, test_key: stat.stat_key, stat_type: "attribute", bonus: stat.stat_value, difficulty }) }); setStatus("[data-request-state]", `Teste de ${stat.stat_name} enviado para Alice.`); } catch (error) { setStatus("[data-request-state]", error.message); } });
     document.querySelector("[data-polaroid-form]")?.addEventListener("submit", async (event) => { event.preventDefault(); const values = formValues(event.currentTarget); const uses = values.max_uses ? Number(values.max_uses) : null; const payload = { ...values, max_uses: uses, remaining_uses: uses, is_revealed: event.currentTarget.is_revealed.checked }; try { await api("special_polaroids", "", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify(payload) }); event.currentTarget.reset(); setStatus("[data-polaroid-state]", "Polaroid criada."); loadPolaroids(true); } catch (error) { setStatus("[data-polaroid-state]", error.message); } });
     document.addEventListener("click", async (event) => { const button = event.target.closest("[data-reveal-polaroid]"); if (!button) return; try { await api("special_polaroids", `?id=eq.${button.dataset.revealPolaroid}`, { method: "PATCH", headers: { Prefer: "return=minimal" }, body: JSON.stringify({ is_revealed: true }) }); loadPolaroids(true); } catch (error) { setStatus("[data-polaroid-state]", error.message); } });
   }
