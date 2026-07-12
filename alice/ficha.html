@@ -8,21 +8,18 @@
       <section class="identity-strip">
         <div><p class="kicker">Sujeito registrado</p><h1 class="sheet-name">Mannon</h1><p class="occupation">Fotógrafa · Viksdal</p></div>
         <div class="resource-grid" data-character-resources>
-          <article class="resource"><span>Vida</span><strong data-health>6 / 6</strong><small data-health-state>Íntegra</small></article>
-          <article class="resource"><span>Sanidade</span><strong data-sanity>20 / 20</strong><small data-sanity-state>Funcional</small></article>
-          <article class="resource"><span>Filmes da Polaroid</span><strong data-films>13 / 13</strong><small>exposições restantes</small></article>
+          <article class="resource editable-resource"><span>Vida</span><div class="sheet-stepper"><button type="button" data-alice-adjust="current_health" data-delta="-1" aria-label="Reduzir Vida">−</button><strong data-health>—</strong><button type="button" data-alice-adjust="current_health" data-delta="1" aria-label="Aumentar Vida">+</button></div><small data-health-state>Carregando</small></article>
+          <article class="resource editable-resource"><span>Sanidade</span><div class="sheet-stepper"><button type="button" data-alice-adjust="current_sanity" data-delta="-1" aria-label="Reduzir Sanidade">−</button><strong data-sanity>—</strong><button type="button" data-alice-adjust="current_sanity" data-delta="1" aria-label="Aumentar Sanidade">+</button></div><small data-sanity-state>Carregando</small></article>
+          <article class="resource editable-resource"><span>Filmes da Polaroid</span><div class="sheet-stepper"><button type="button" data-alice-adjust="films_remaining" data-delta="-1" aria-label="Reduzir Filmes">−</button><strong data-films>—</strong><button type="button" data-alice-adjust="films_remaining" data-delta="1" aria-label="Aumentar Filmes">+</button></div><small>exposições restantes</small></article>
           <article class="resource location-resource"><span>Localização atual</span><strong data-location>Entrada de Viksdal</strong></article>
         </div>
       </section>
 
       <section class="sheet-columns">
         <div>
-          <section class="record-section"><div class="section-heading"><p class="kicker">Valores independentes</p><h2>Atributos</h2></div><div class="stat-list" data-attributes>
-            <div><strong>VER</strong><span>+3</span></div><div><strong>AGUENTAR</strong><span>+2</span></div><div><strong>LEMBRAR</strong><span>+2</span></div><div><strong>CEDER</strong><span>+1</span></div><div><strong>CRIAR</strong><span>+4</span></div><div><strong>FUGIR</strong><span>+2</span></div>
-          </div><p class="rule-note">Cada teste usa somente um destes valores. Atributo e perícia nunca são somados.</p></section>
-          <section class="record-section"><div class="section-heading"><p class="kicker">Conhecimentos</p><h2>Perícias</h2></div><div class="stat-list" data-skills>
-            <div><strong>Fotografia</strong><span>+2</span></div><div><strong>Pintura</strong><span>+1</span></div><div><strong>Percepção de detalhes</strong><span>+1</span></div><div><strong>Memória afetiva</strong><span>+1</span></div><div><strong>Esconder-se</strong><span>+1</span></div>
-          </div></section>
+          <p class="save-feedback" data-sheet-save-state aria-live="polite">Valores carregados do arquivo.</p>
+          <section class="record-section"><div class="section-heading"><p class="kicker">Valores independentes</p><h2>Atributos</h2></div><div class="stat-list editable-stats" data-attributes data-editable-stats><p class="empty-note">Carregando atributos…</p></div><p class="rule-note">Cada teste usa somente um destes valores. Atributo e perícia nunca são somados.</p></section>
+          <section class="record-section"><div class="section-heading"><p class="kicker">Conhecimentos</p><h2>Perícias</h2></div><div class="stat-list editable-stats" data-skills data-editable-stats><p class="empty-note">Carregando perícias…</p></div></section>
           <section class="record-section"><div class="section-heading"><p class="kicker">Estado observado</p><h2>Condições</h2></div><div class="condition-list" data-conditions><p class="empty-note">Nenhuma condição ativa.</p></div></section>
         </div>
 

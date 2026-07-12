@@ -8,6 +8,7 @@
   let characterState = null;
   let stats = [];
   let activeRequest = null;
+  const statSaveTimers = new Map();
 
   function authHeaders() { return { apikey: config.supabaseAnonKey }; }
   function setText(selector, text) { document.querySelectorAll(selector).forEach((element) => { element.textContent = text; }); }
@@ -84,13 +85,25 @@
       renderCharacterState();
     } catch (error) { setStatus("[data-character-state]", "A ficha aguarda a migração 002 no Supabase."); console.warn(error); }
   }
-  async function updateCharacter(patch) {
+  async function updateCharacter(patch, options = {}) {
+    const previous = characterState ? { ...characterState } : null;
+    if (options.optimistic && characterState) {
+      characterState = { ...characterState, ...patch };
+      renderCharacterState();
+      setStatus(options.statusSelector || "[data-character-state]", "Salvando…");
+    }
     try {
-      const rows = await api("character_state", "?id=eq.1", { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ ...patch, updated_at: new Date().toISOString() }) });
+      const rows = await api("character_state", "?id=eq.1", { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify(patch) });
       characterState = rows[0] || characterState;
       renderCharacterState();
-      setStatus("[data-character-state]", "Estado atualizado para Alice.");
-    } catch (error) { setStatus("[data-character-state]", error.message); }
+      setStatus(options.statusSelector || "[data-character-state]", options.successMessage || "Salvo");
+      return true;
+    } catch (error) {
+      if (previous) { characterState = previous; renderCharacterState(); }
+      setStatus(options.statusSelector || "[data-character-state]", options.errorMessage || "Não foi possível salvar.");
+      console.warn(error);
+      return false;
+    }
   }
 
   async function loadStats() {
@@ -102,10 +115,38 @@
     } catch (error) { console.warn(error); }
   }
   function renderStats(type, selector) {
-    const container = document.querySelector(selector);
     const filtered = stats.filter((stat) => stat.stat_type === type);
-    if (!container || !filtered.length) return;
-    container.innerHTML = filtered.map((stat) => `<div><strong>${escapeHtml(stat.stat_name)}</strong><span>+${stat.stat_value}</span></div>`).join("");
+    document.querySelectorAll(selector).forEach((container) => {
+      if (!filtered.length) return;
+      const editable = container.hasAttribute("data-editable-stats");
+      container.innerHTML = filtered.map((stat) => editable
+        ? `<label class="stat-editor"><strong>${escapeHtml(stat.stat_name)}</strong><span class="number-field"><span aria-hidden="true">+</span><input type="number" min="-20" max="20" step="1" value="${stat.stat_value}" data-stat-input="${stat.id}" aria-label="Valor de ${escapeHtml(stat.stat_name)}"></span></label>`
+        : `<div><strong>${escapeHtml(stat.stat_name)}</strong><span>${stat.stat_value >= 0 ? "+" : ""}${stat.stat_value}</span></div>`
+      ).join("");
+    });
+  }
+  async function updateStat(id, nextValue) {
+    const stat = stats.find((item) => item.id === id);
+    if (!stat) return;
+    const previousValue = stat.stat_value;
+    stat.stat_value = nextValue;
+    renderStats(stat.stat_type, stat.stat_type === "attribute" ? "[data-attributes]" : "[data-skills]");
+    populateStatSelect();
+    setStatus("[data-sheet-save-state]", "Salvando…");
+    try {
+      const rows = await api("character_stats", `?id=eq.${id}`, { method: "PATCH", headers: { Prefer: "return=representation" }, body: JSON.stringify({ stat_value: nextValue }) });
+      if (!Array.isArray(rows) || rows.length !== 1) throw new Error("O Supabase não confirmou a alteração.");
+      stat.stat_value = rows[0].stat_value;
+      renderStats(stat.stat_type, stat.stat_type === "attribute" ? "[data-attributes]" : "[data-skills]");
+      populateStatSelect();
+      setStatus("[data-sheet-save-state]", "Salvo");
+    } catch (error) {
+      stat.stat_value = previousValue;
+      renderStats(stat.stat_type, stat.stat_type === "attribute" ? "[data-attributes]" : "[data-skills]");
+      populateStatSelect();
+      setStatus("[data-sheet-save-state]", "Não foi possível salvar.");
+      console.warn(error);
+    }
   }
   function populateStatSelect() {
     const select = document.querySelector("[data-stat-select]");
@@ -235,6 +276,31 @@
   }
 
   function bindAliceEvents() {
+    document.querySelectorAll("[data-alice-adjust]").forEach((button) => button.addEventListener("click", async () => {
+      if (!characterState || button.disabled) return;
+      const field = button.dataset.aliceAdjust;
+      const limits = { current_health: [0, characterState.max_health], current_sanity: [0, characterState.max_sanity], films_remaining: [0, characterState.films_max] };
+      const next = Math.min(limits[field][1], Math.max(limits[field][0], Number(characterState[field]) + Number(button.dataset.delta)));
+      if (next === characterState[field]) return;
+      const fieldButtons = document.querySelectorAll(`[data-alice-adjust="${field}"]`);
+      fieldButtons.forEach((item) => { item.disabled = true; });
+      await updateCharacter({ [field]: next }, { optimistic: true, statusSelector: "[data-sheet-save-state]", successMessage: "Salvo", errorMessage: "Não foi possível salvar." });
+      fieldButtons.forEach((item) => { item.disabled = false; });
+    }));
+    document.addEventListener("input", (event) => {
+      const input = event.target.closest("[data-stat-input]");
+      if (!input) return;
+      const value = Math.max(-20, Math.min(20, Math.trunc(Number(input.value))));
+      if (!Number.isFinite(value)) return;
+      const current = stats.find((item) => item.id === Number(input.dataset.statInput));
+      if (!current || current.stat_value === value) return;
+      setStatus("[data-sheet-save-state]", "Salvando…");
+      clearTimeout(statSaveTimers.get(current.id));
+      statSaveTimers.set(current.id, setTimeout(() => {
+        statSaveTimers.delete(current.id);
+        updateStat(current.id, value);
+      }, 450));
+    });
     document.querySelector("[data-roll-request]")?.addEventListener("click", rollRequestedTest);
     document.querySelector("[data-free-dice-form]")?.addEventListener("submit", (event) => { event.preventDefault(); const sides = Number(event.currentTarget.sides.value); setText("[data-free-result]", randomDie(sides)); });
     document.querySelector("[data-photo-form]")?.addEventListener("submit", async (event) => { event.preventDefault(); const values = formValues(event.currentTarget); values.photo_date = values.photo_date || null; try { await api("digital_photos", "", { method: "POST", headers: { Prefer: "return=minimal" }, body: JSON.stringify(values) }); event.currentTarget.reset(); setStatus("[data-photo-state]", "Fotografia guardada."); loadDigitalPhotos(); } catch (error) { setStatus("[data-photo-state]", error.message); } });
@@ -258,12 +324,12 @@
   function initMasterData() {
     bindMasterEvents();
     readHubMessage(); loadCharacterState(); loadStats(); loadConditions(); loadLastRoll(); loadPolaroids(true);
-    setInterval(() => { loadCharacterState(); loadConditions(); loadLastRoll(); loadPolaroids(true); }, pollEvery);
+    setInterval(() => { loadCharacterState(); loadStats(); loadConditions(); loadLastRoll(); loadPolaroids(true); }, pollEvery);
   }
   function initAliceData() {
     bindAliceEvents();
     loadCharacterState(); loadStats(); loadConditions(); loadPendingRequest(); loadDigitalPhotos(); loadPolaroids(false);
-    setInterval(() => { loadCharacterState(); loadConditions(); loadPendingRequest(); loadPolaroids(false); }, pollEvery);
+    setInterval(() => { loadCharacterState(); if (!document.activeElement?.matches("[data-stat-input]")) loadStats(); loadConditions(); loadPendingRequest(); loadPolaroids(false); }, pollEvery);
   }
 
   document.addEventListener("DOMContentLoaded", () => {
