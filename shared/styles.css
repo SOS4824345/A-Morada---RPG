@@ -650,8 +650,8 @@ body.alice-theme::after {
 .inventory-slot.is-selected { border-color: var(--wine); box-shadow: inset 0 0 0 2px rgba(75,46,48,.19), 0 8px 18px rgba(30,29,24,.12); }
 .inventory-slot.is-selected::after { content: ""; position: absolute; inset: 4px; border: 1px solid rgba(75,46,48,.28); pointer-events: none; }
 .inventory-slot-number { font: .55rem var(--mono); color: var(--muted); }
-.inventory-slot-image { min-height: 76px; display: grid; place-items: center; overflow: hidden; background: rgba(73,73,64,.15); }
-.inventory-slot-image img { width: 100%; height: 100%; max-height: 92px; object-fit: cover; filter: saturate(.72) contrast(.94); }
+.inventory-slot-image { height: 92px; min-height: 76px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 8px; box-sizing: border-box; background: rgba(73,73,64,.15); }
+.inventory-slot-image img { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; object-position: center; filter: saturate(.72) contrast(.94); }
 .inventory-slot strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 1rem var(--display); }
 .inventory-slot-meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: .5rem var(--mono); color: var(--muted); }
 .inventory-slot.is-favorite .inventory-slot-number::after { content: " ★"; color: var(--wine); }
@@ -660,8 +660,8 @@ body.alice-theme::after {
 .inventory-no-selection { min-height: 540px; display: grid; place-content: center; justify-items: center; text-align: center; color: var(--muted); }
 .inventory-no-selection h2 { font: 2rem var(--display); color: var(--ink); }
 .inventory-reticle { font-size: 4rem; color: var(--rust); }
-.inventory-preview { aspect-ratio: 16 / 9; min-height: 220px; display: grid; place-items: center; overflow: hidden; background: linear-gradient(145deg, rgba(53,54,48,.28), rgba(53,54,48,.09)); border: 1px solid var(--line); }
-.inventory-preview img { width: 100%; height: 100%; object-fit: contain; filter: saturate(.76) contrast(.96); }
+.inventory-preview { height: clamp(300px, 35vw, 420px); min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: clamp(20px, 3vw, 32px); box-sizing: border-box; background: linear-gradient(145deg, rgba(247,242,236,.78), rgba(205,201,199,.48)); border: 1px solid var(--line); }
+.inventory-preview img { display: block; width: auto; height: auto; max-width: min(88%, 680px); max-height: 100%; object-fit: contain; object-position: center; filter: saturate(.76) contrast(.96); }
 .inventory-image-placeholder { font: 4rem var(--display); color: rgba(75,46,48,.34); }
 .inventory-detail-copy { padding: 20px 3px 3px; }
 .inventory-item-title { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
@@ -705,7 +705,7 @@ body.alice-theme::after {
 .alice-inventory-page .inventory-empty { color: rgba(255,246,247,.72); }
 .alice-inventory-page .inventory-detail-panel { position: relative; background: linear-gradient(128deg, rgba(255,255,255,.64), rgba(241,205,215,.18)); border-color: rgba(100,54,71,.27); border-radius: 5px 17px 6px 11px; box-shadow: 7px 10px 0 rgba(189,116,136,.07), 0 20px 43px rgba(100,54,71,.13), inset 0 0 28px rgba(255,255,255,.44); backdrop-filter: blur(5px); }
 .alice-inventory-page .inventory-detail-panel::after { content: "REC  00:00:00"; position: absolute; right: 18px; top: 16px; color: rgba(100,54,71,.43); font: .5rem var(--mono); letter-spacing: .1em; pointer-events: none; }
-.alice-inventory-page .inventory-preview { background: radial-gradient(circle at 47% 38%, rgba(255,255,255,.82), rgba(217,217,210,.42) 39%, rgba(76,65,72,.23)); border-color: rgba(100,54,71,.22); box-shadow: inset 0 0 42px rgba(255,255,255,.4), 0 8px 24px rgba(100,54,71,.09); }
+.alice-inventory-page .inventory-preview { background: radial-gradient(circle at 47% 38%, rgba(255,250,247,.68), rgba(224,216,219,.48) 42%, rgba(112,94,105,.2)); border-color: rgba(100,54,71,.22); box-shadow: inset 0 0 42px rgba(255,255,255,.32), 0 8px 24px rgba(100,54,71,.09); }
 .alice-inventory-page .inventory-image-placeholder { color: rgba(100,54,71,.48); text-shadow: -2px 0 rgba(189,116,136,.22), 2px 0 rgba(127,135,109,.2); }
 .alice-inventory-page .inventory-favorite-button, .alice-inventory-page .inventory-quantity-control button, .alice-inventory-page .inventory-secondary-button, .alice-inventory-page .inventory-actions button, .alice-inventory-page .inventory-order-controls button { border-color: rgba(100,54,71,.26); background: rgba(255,255,255,.38); border-radius: 7px 2px 8px 4px; }
 .alice-inventory-page .inventory-actions button { color: #fffaf8; background: linear-gradient(155deg, #a96d7d, #724657); border-color: #633748; box-shadow: inset 0 1px rgba(255,255,255,.33), 0 5px 12px rgba(100,54,71,.14); }
@@ -749,7 +749,8 @@ body.alice-theme::after {
   .inventory-filter { width: 100%; }
   .inventory-slot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .inventory-slot { min-height: 145px; }
-  .inventory-preview { min-height: 180px; }
+  .inventory-preview { height: clamp(220px, 64vw, 300px); min-height: 0; padding: 18px; }
+  .inventory-preview img { max-width: 100%; }
   .inventory-admin-form, .inventory-checks { grid-template-columns: 1fr; }
   .inventory-admin-form .wide-field { grid-column: auto; }
   .inventory-actions { grid-template-columns: 1fr; }
@@ -759,6 +760,7 @@ body.alice-theme::after {
   .inventory-slot-grid { gap: 7px; }
   .inventory-slot { min-height: 132px; padding: 8px; }
   .inventory-slot-image { min-height: 62px; }
+  .inventory-preview { height: clamp(200px, 68vw, 270px); padding: 14px; }
   .inventory-grid-panel, .inventory-detail-panel { padding: 13px; }
   .inventory-facts { grid-template-columns: 1fr; }
   .inventory-order-controls button { flex: 1; }
