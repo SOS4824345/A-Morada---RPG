@@ -1,1 +1,34 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inventário · A Morada</title><link rel="stylesheet" href="../shared/styles.css"></head><body class="hub-page"><main class="sheet placeholder-sheet"><a class="back-link" href="index.html">← Voltar ao arquivo</a><section class="placeholder-content"><p class="kicker">Pertences 03</p><h1>Inventário</h1><span class="empty-stamp">Bolsa fechada</span><p>Os objetos de Mannon serão registrados em uma etapa futura.</p></section></main></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inventário de Mannon · A Morada</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+</head>
+<body class="hub-page alice-theme alice-inventory-page" data-page="alice-inventory">
+  <div class="desk wide-desk">
+    <header class="site-header"><a class="site-mark" href="index.html">← Arquivo de Alice</a><p class="file-id">Pertences de Mannon<br>itens visíveis</p></header>
+    <main class="sheet inventory-sheet alice-inventory-sheet">
+      <header class="inventory-heading">
+        <div><p class="kicker">Bolsa pessoal · registro 03</p><h1>Inventário</h1><p>Selecione um objeto para consultar seu registro.</p></div>
+        <label class="inventory-filter">Categoria<select data-inventory-filter><option value="ALL">Todas</option><option>OBJETO</option><option>CHAVE</option><option>CONSUMÍVEL</option><option>ARMA</option><option>REMÉDIO</option><option>OUTRO</option></select></label>
+      </header>
+
+      <div class="inventory-game-layout">
+        <section class="inventory-grid-panel" aria-labelledby="inventory-list-title">
+          <div class="inventory-panel-label"><span>ITENS</span><span data-inventory-count>00</span></div>
+          <h2 id="inventory-list-title" class="sr-only">Itens disponíveis</h2>
+          <div class="inventory-slot-grid" data-inventory-grid><p class="inventory-empty">Carregando inventário…</p></div>
+        </section>
+
+        <section class="inventory-detail-panel" data-inventory-detail aria-live="polite">
+          <div class="inventory-no-selection"><span class="inventory-reticle" aria-hidden="true">◇</span><h2>Nenhum item selecionado</h2><p>Escolha um espaço da grade para abrir os detalhes.</p></div>
+        </section>
+      </div>
+      <p class="status-line inventory-status" data-inventory-state aria-live="polite">Consultando os pertences…</p>
+    </main>
+  </div>
+  <script src="../shared/config.js"></script><script src="../shared/inventory.js"></script>
+</body>
+</html>

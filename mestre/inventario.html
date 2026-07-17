@@ -1,1 +1,51 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inventário · Mestre</title><link rel="stylesheet" href="../shared/styles.css"></head><body class="hub-page"><main class="sheet master-sheet placeholder-sheet"><a class="back-link" href="index.html">← Voltar à observação</a><section class="placeholder-content"><p class="kicker">Registro reservado 03</p><h1>Inventário</h1><span class="empty-stamp">Em preparação</span><p>O controle de objetos será criado em uma etapa futura.</p></section></main></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inventário · Mestre</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+</head>
+<body class="hub-page master-inventory-page" data-page="master-inventory">
+  <section class="master-gate" data-master-inventory-gate><form class="gate-card" data-inventory-gate-form><p class="kicker">Acesso reservado</p><h1>Inventário</h1><label for="inventory-password">Senha</label><input id="inventory-password" name="password" type="password" autocomplete="current-password" required><button class="ink-button" type="submit">Entrar</button><p class="status-line" data-inventory-gate-state>Controle de pertences de Mannon.</p></form></section>
+
+  <div class="desk wide-desk" data-master-inventory-app hidden>
+    <header class="site-header"><a class="site-mark" href="index.html">← Observação 09</a><p class="file-id">Registro reservado 03<br>controle de inventário</p></header>
+    <main class="sheet master-sheet master-inventory-sheet">
+      <header class="master-inventory-heading"><div><p class="kicker">Arquivo de pertences</p><h1>Inventário</h1></div><p>Criação, visibilidade e resposta às solicitações de Alice.</p></header>
+
+      <section class="control-panel inventory-create-panel">
+        <div class="section-heading"><p class="kicker">Novo registro</p><h2>Criar item</h2></div>
+        <form class="inventory-admin-form" data-master-item-create-form>
+          <label>Nome<input name="name" required maxlength="120"></label>
+          <label>Imagem (URL opcional)<input name="image_url" type="url"></label>
+          <label>Categoria<select name="category"><option>OBJETO</option><option>CHAVE</option><option>CONSUMÍVEL</option><option>ARMA</option><option>REMÉDIO</option><option>OUTRO</option></select></label>
+          <label>Estado<select name="item_state"><option>NORMAL</option><option>DANIFICADO</option><option>VAZIO</option><option>INCOMPLETO</option><option>USADO</option></select></label>
+          <label>Quantidade<input name="quantity" type="number" min="0" max="9999" value="1" required></label>
+          <label>Ordem<input name="sort_order" type="number" value="0" required></label>
+          <label class="wide-field">Descrição visível<textarea name="visible_description" maxlength="2000"></textarea></label>
+          <label class="wide-field">Descrição examinada<textarea name="examined_description" maxlength="2000"></textarea></label>
+          <label class="wide-field">Descrição secreta<textarea name="secret_description" maxlength="2000"></textarea></label>
+          <label class="wide-field">Notas do Mestre<textarea name="master_notes" maxlength="2000"></textarea></label>
+          <div class="inventory-checks wide-field">
+            <label><input type="checkbox" name="is_visible"> Visível para Alice</label>
+            <label><input type="checkbox" name="allows_multiple"> Permite quantidade maior que 1</label>
+            <label><input type="checkbox" name="can_be_examined" checked> Pode ser examinado</label>
+            <label><input type="checkbox" name="can_be_discarded"> Pode ser descartado</label>
+            <label><input type="checkbox" name="can_player_change_quantity"> Alice altera quantidade</label>
+          </div>
+          <button class="ink-button" type="submit">Criar item</button><p class="status-line" data-master-inventory-state></p>
+        </form>
+      </section>
+
+      <div class="master-inventory-layout">
+        <section class="control-panel"><div class="section-heading"><p class="kicker">Todos os registros</p><h2>Itens</h2></div><div class="master-item-list" data-master-item-list><p class="empty-note">Nenhum item registrado.</p></div></section>
+        <section class="control-panel master-item-editor" data-master-item-editor><div class="section-heading"><p class="kicker">Edição</p><h2>Selecione um item</h2></div><p class="empty-note">Os campos completos serão exibidos aqui.</p></section>
+      </div>
+
+      <section class="control-panel inventory-actions-panel"><div class="section-heading"><p class="kicker">Pedidos de Alice</p><h2>Solicitações</h2></div><div class="master-action-list" data-master-action-list><p class="empty-note">Nenhuma solicitação registrada.</p></div></section>
+    </main>
+  </div>
+  <script src="../shared/config.js"></script><script src="../shared/inventory.js"></script>
+</body>
+</html>

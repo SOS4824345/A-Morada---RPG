@@ -633,3 +633,135 @@ body.alice-theme::after {
   .alice-theme .record-section::before { left: 16px; }
   .alice-polaroid-page .polaroid-album { gap: 27px; padding-inline: 0; }
 }
+
+/* Inventário — menu survival horror reinterpretado para A Morada */
+.sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.inventory-sheet, .master-inventory-sheet { min-height: calc(100vh - 145px); }
+.inventory-heading, .master-inventory-heading { display: flex; justify-content: space-between; gap: 32px; align-items: end; padding-bottom: 28px; margin-bottom: 26px; border-bottom: 1px solid var(--line); }
+.inventory-heading h1, .master-inventory-heading h1 { margin: 6px 0 10px; font-size: clamp(3.3rem, 7vw, 6.4rem); }
+.inventory-heading > div > p:last-child, .master-inventory-heading > p { max-width: 480px; color: var(--muted); }
+.inventory-filter { width: min(230px, 100%); }
+.inventory-game-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr); gap: 24px; align-items: stretch; }
+.inventory-grid-panel, .inventory-detail-panel { min-width: 0; padding: 18px; border: 1px solid var(--line); }
+.inventory-panel-label { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 16px; font: .62rem var(--mono); letter-spacing: .14em; color: var(--muted); }
+.inventory-slot-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.inventory-slot { min-width: 0; min-height: 155px; display: grid; grid-template-rows: auto 1fr auto auto; gap: 6px; position: relative; padding: 10px; text-align: left; color: inherit; background: rgba(229,223,202,.26); border: 1px solid var(--line); cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.inventory-slot:hover { transform: translateY(-2px); background: rgba(239,233,214,.43); }
+.inventory-slot.is-selected { border-color: var(--wine); box-shadow: inset 0 0 0 2px rgba(75,46,48,.19), 0 8px 18px rgba(30,29,24,.12); }
+.inventory-slot.is-selected::after { content: ""; position: absolute; inset: 4px; border: 1px solid rgba(75,46,48,.28); pointer-events: none; }
+.inventory-slot-number { font: .55rem var(--mono); color: var(--muted); }
+.inventory-slot-image { min-height: 76px; display: grid; place-items: center; overflow: hidden; background: rgba(73,73,64,.15); }
+.inventory-slot-image img { width: 100%; height: 100%; max-height: 92px; object-fit: cover; filter: saturate(.72) contrast(.94); }
+.inventory-slot strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 1rem var(--display); }
+.inventory-slot-meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: .5rem var(--mono); color: var(--muted); }
+.inventory-slot.is-favorite .inventory-slot-number::after { content: " ★"; color: var(--wine); }
+.inventory-empty { grid-column: 1 / -1; min-height: 310px; display: grid; place-items: center; margin: 0; text-align: center; color: var(--muted); }
+.inventory-detail-panel { display: flex; flex-direction: column; }
+.inventory-no-selection { min-height: 540px; display: grid; place-content: center; justify-items: center; text-align: center; color: var(--muted); }
+.inventory-no-selection h2 { font: 2rem var(--display); color: var(--ink); }
+.inventory-reticle { font-size: 4rem; color: var(--rust); }
+.inventory-preview { aspect-ratio: 16 / 9; min-height: 220px; display: grid; place-items: center; overflow: hidden; background: linear-gradient(145deg, rgba(53,54,48,.28), rgba(53,54,48,.09)); border: 1px solid var(--line); }
+.inventory-preview img { width: 100%; height: 100%; object-fit: contain; filter: saturate(.76) contrast(.96); }
+.inventory-image-placeholder { font: 4rem var(--display); color: rgba(75,46,48,.34); }
+.inventory-detail-copy { padding: 20px 3px 3px; }
+.inventory-item-title { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
+.inventory-item-title span { font: .61rem var(--mono); letter-spacing: .12em; color: var(--rust); }
+.inventory-item-title h2 { margin: 6px 0 14px; font: clamp(2.1rem, 4vw, 3.5rem)/.95 var(--display); }
+.inventory-favorite-button { width: 44px; height: 44px; flex: 0 0 auto; border: 1px solid var(--line); color: var(--wine); background: rgba(239,233,214,.34); font-size: 1.35rem; cursor: pointer; }
+.inventory-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0 0 18px; }
+.inventory-facts div { padding: 10px 12px; border: 1px solid var(--line); }
+.inventory-facts dt { font: .56rem var(--mono); text-transform: uppercase; color: var(--muted); }
+.inventory-facts dd { margin: 7px 0 0; font: 1rem var(--mono); }
+.inventory-quantity-control { display: grid; grid-template-columns: 28px 1fr 28px; gap: 6px; align-items: center; }
+.inventory-quantity-control button { width: 28px; height: 28px; padding: 0; border: 1px solid var(--line); background: transparent; cursor: pointer; }
+.inventory-quantity-control strong { text-align: center; }
+.inventory-description { min-height: 58px; line-height: 1.55; }
+.inventory-examined { padding: 14px 16px; margin: 15px 0; border-left: 3px solid var(--olive); background: rgba(68,72,58,.08); }
+.inventory-examined span { font: .57rem var(--mono); letter-spacing: .12em; color: var(--olive); }
+.inventory-examined p { margin: 8px 0 0; line-height: 1.5; }
+.inventory-player-note, .inventory-action-message { margin-top: 18px; }
+.inventory-note-row { display: flex; gap: 12px; align-items: center; margin-top: 8px; }
+.inventory-note-row span { font: .58rem var(--mono); color: var(--muted); }
+.inventory-secondary-button, .inventory-actions button, .inventory-order-controls button, .secondary-ink-button, .danger-button { padding: 9px 12px; border: 1px solid var(--line); color: inherit; background: rgba(239,233,214,.34); font: .64rem var(--mono); text-transform: uppercase; cursor: pointer; }
+.inventory-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+.inventory-actions button:first-child { border-color: var(--olive); }
+.inventory-actions button:hover, .inventory-secondary-button:hover, .inventory-order-controls button:hover { background: rgba(239,233,214,.7); }
+.inventory-order-controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 16px; }
+.inventory-order-controls > span { margin-right: auto; font: .57rem var(--mono); color: var(--muted); text-transform: uppercase; }
+.inventory-status { padding-left: 4px; }
+
+/* Inventário de Alice: visor de jogo, vidro perolado e seleção expressiva */
+.alice-inventory-page .alice-inventory-sheet { overflow: hidden; }
+.alice-inventory-page .alice-inventory-sheet::before { content: "◇"; position: absolute; right: clamp(30px, 6vw, 90px); top: 25px; z-index: 2; color: rgba(189,116,136,.55); font: 2.6rem var(--display); text-shadow: -22px 18px 0 rgba(127,135,109,.31), 18px 34px 0 rgba(255,255,255,.88); pointer-events: none; }
+.alice-inventory-page .inventory-heading { border-color: rgba(100,54,71,.18); }
+.alice-inventory-page .inventory-grid-panel { background: linear-gradient(155deg, rgba(72,64,69,.78), rgba(78,74,72,.59)); border-color: rgba(255,255,255,.34); box-shadow: inset 0 0 35px rgba(33,29,31,.24), 8px 11px 0 rgba(127,135,109,.07), 0 18px 38px rgba(100,54,71,.13); }
+.alice-inventory-page .inventory-grid-panel .inventory-panel-label { color: rgba(255,246,247,.74); }
+.alice-inventory-page .inventory-slot { color: #f9eff1; background: linear-gradient(145deg, rgba(255,255,255,.10), rgba(224,177,191,.08)); border-color: rgba(255,255,255,.19); box-shadow: inset 0 1px 0 rgba(255,255,255,.08); }
+.alice-inventory-page .inventory-slot:hover { background: rgba(255,255,255,.16); }
+.alice-inventory-page .inventory-slot.is-selected { border-color: #efcbd4; box-shadow: inset 0 0 0 2px rgba(239,203,212,.28), 0 0 24px rgba(239,203,212,.21), 5px 6px 0 rgba(21,19,20,.15); }
+.alice-inventory-page .inventory-slot.is-selected::after { border-color: rgba(255,255,255,.38); }
+.alice-inventory-page .inventory-slot-number, .alice-inventory-page .inventory-slot-meta { color: rgba(255,246,247,.62); }
+.alice-inventory-page .inventory-slot-image { background: radial-gradient(circle at 50% 36%, rgba(255,255,255,.18), rgba(18,17,18,.28)); }
+.alice-inventory-page .inventory-empty { color: rgba(255,246,247,.72); }
+.alice-inventory-page .inventory-detail-panel { position: relative; background: linear-gradient(128deg, rgba(255,255,255,.64), rgba(241,205,215,.18)); border-color: rgba(100,54,71,.27); border-radius: 5px 17px 6px 11px; box-shadow: 7px 10px 0 rgba(189,116,136,.07), 0 20px 43px rgba(100,54,71,.13), inset 0 0 28px rgba(255,255,255,.44); backdrop-filter: blur(5px); }
+.alice-inventory-page .inventory-detail-panel::after { content: "REC  00:00:00"; position: absolute; right: 18px; top: 16px; color: rgba(100,54,71,.43); font: .5rem var(--mono); letter-spacing: .1em; pointer-events: none; }
+.alice-inventory-page .inventory-preview { background: radial-gradient(circle at 47% 38%, rgba(255,255,255,.82), rgba(217,217,210,.42) 39%, rgba(76,65,72,.23)); border-color: rgba(100,54,71,.22); box-shadow: inset 0 0 42px rgba(255,255,255,.4), 0 8px 24px rgba(100,54,71,.09); }
+.alice-inventory-page .inventory-image-placeholder { color: rgba(100,54,71,.48); text-shadow: -2px 0 rgba(189,116,136,.22), 2px 0 rgba(127,135,109,.2); }
+.alice-inventory-page .inventory-favorite-button, .alice-inventory-page .inventory-quantity-control button, .alice-inventory-page .inventory-secondary-button, .alice-inventory-page .inventory-actions button, .alice-inventory-page .inventory-order-controls button { border-color: rgba(100,54,71,.26); background: rgba(255,255,255,.38); border-radius: 7px 2px 8px 4px; }
+.alice-inventory-page .inventory-actions button { color: #fffaf8; background: linear-gradient(155deg, #a96d7d, #724657); border-color: #633748; box-shadow: inset 0 1px rgba(255,255,255,.33), 0 5px 12px rgba(100,54,71,.14); }
+.alice-inventory-page .inventory-actions button:hover { background: linear-gradient(155deg, #b77b8a, #805163); }
+.alice-inventory-page .inventory-facts div { background: rgba(255,255,255,.27); border-color: rgba(100,54,71,.16); }
+
+/* Inventário do Mestre: controles administrativos no arquivo antigo */
+.master-inventory-heading { align-items: center; }
+.master-inventory-heading h1 { margin-bottom: 0; }
+.inventory-create-panel { margin-bottom: 22px; }
+.inventory-admin-form { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.inventory-admin-form .wide-field { grid-column: span 2; }
+.inventory-checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; align-content: start; padding: 12px; border: 1px solid var(--line); }
+.inventory-checks label { display: flex; align-items: center; gap: 8px; font-size: .58rem; }
+.inventory-checks input { width: auto; }
+.master-inventory-layout { display: grid; grid-template-columns: .78fr 1.22fr; gap: 20px; }
+.master-item-list { display: grid; gap: 6px; }
+.master-item-row { width: 100%; display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 12px; text-align: left; color: inherit; background: rgba(235,229,205,.18); border: 1px solid transparent; border-bottom-color: var(--line); cursor: pointer; }
+.master-item-row span:first-child { display: grid; gap: 5px; }
+.master-item-row small, .master-item-row > span:last-child { font: .55rem var(--mono); color: var(--muted); }
+.master-item-row.is-selected { border-color: var(--wine); background: rgba(235,229,205,.4); }
+.inventory-editor-actions { display: flex; gap: 10px; align-items: center; }
+.danger-button { color: var(--wine); border-color: rgba(75,46,48,.52); background: rgba(117,79,60,.08); }
+.inventory-actions-panel { margin-top: 20px; }
+.master-action-list { display: grid; gap: 10px; }
+.master-action-row { display: flex; justify-content: space-between; gap: 24px; align-items: center; padding: 15px; border: 1px solid var(--line); background: rgba(235,229,205,.18); }
+.master-action-row.is-pending { border-left: 3px solid var(--wine); }
+.master-action-row h3 { margin: 5px 0; font: 1.35rem var(--display); }
+.master-action-row p { margin: 0 0 5px; color: var(--muted); }
+.master-action-row span, .master-action-row small { font: .56rem var(--mono); color: var(--rust); letter-spacing: .08em; }
+.master-action-row > div:last-child { display: flex; gap: 8px; }
+
+@media (max-width: 1000px) {
+  .inventory-game-layout, .master-inventory-layout { grid-template-columns: 1fr; }
+  .inventory-admin-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .inventory-admin-form .wide-field { grid-column: 1 / -1; }
+  .inventory-slot-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .inventory-heading, .master-inventory-heading { display: grid; align-items: start; }
+  .inventory-filter { width: 100%; }
+  .inventory-slot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .inventory-slot { min-height: 145px; }
+  .inventory-preview { min-height: 180px; }
+  .inventory-admin-form, .inventory-checks { grid-template-columns: 1fr; }
+  .inventory-admin-form .wide-field { grid-column: auto; }
+  .inventory-actions { grid-template-columns: 1fr; }
+  .master-action-row { align-items: flex-start; flex-direction: column; }
+}
+@media (max-width: 430px) {
+  .inventory-slot-grid { gap: 7px; }
+  .inventory-slot { min-height: 132px; padding: 8px; }
+  .inventory-slot-image { min-height: 62px; }
+  .inventory-grid-panel, .inventory-detail-panel { padding: 13px; }
+  .inventory-facts { grid-template-columns: 1fr; }
+  .inventory-order-controls button { flex: 1; }
+  .inventory-editor-actions, .master-action-row > div:last-child { width: 100%; flex-direction: column; }
+  .inventory-editor-actions button, .master-action-row > div:last-child button { width: 100%; }
+}
