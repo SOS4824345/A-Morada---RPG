@@ -7,7 +7,7 @@ create table if not exists public.dice_requests (
   test_key text not null,
   stat_type text not null check (stat_type in ('attribute', 'skill')),
   bonus smallint not null,
-  difficulty smallint not null check (difficulty in (10, 15, 20, 25)),
+  difficulty smallint not null check (difficulty between 1 and 30),
   status text not null default 'pending' check (status in ('pending', 'rolled')),
   created_at timestamptz not null default now(),
   rolled_at timestamptz
@@ -19,7 +19,7 @@ create table if not exists public.dice_results (
   die_result smallint not null check (die_result between 1 and 20),
   bonus smallint not null,
   total smallint not null,
-  difficulty smallint not null,
+  difficulty smallint not null check (difficulty between 1 and 30),
   outcome text not null check (outcome in ('FALHA CRÍTICA', 'RUIM', 'BOM', 'EXCELENTE')),
   created_at timestamptz not null default now()
 );
@@ -32,11 +32,33 @@ grant select, insert on public.dice_results to anon;
 grant usage, select on all sequences in schema public to anon;
 
 do $$ begin
-  if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'dice_requests' and policyname = 'Acesso público temporário às solicitações') then
-    create policy "Acesso público temporário às solicitações" on public.dice_requests for all to anon using (true) with check (true);
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'dice_requests'
+      and policyname = 'Acesso público temporário às solicitações'
+  ) then
+    create policy "Acesso público temporário às solicitações"
+    on public.dice_requests
+    for all
+    to anon
+    using (true)
+    with check (true);
   end if;
-  if not exists (select 1 from pg_policies where schemaname = 'public' and tablename = 'dice_results' and policyname = 'Acesso público temporário aos resultados') then
-    create policy "Acesso público temporário aos resultados" on public.dice_results for all to anon using (true) with check (true);
+
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'dice_results'
+      and policyname = 'Acesso público temporário aos resultados'
+  ) then
+    create policy "Acesso público temporário aos resultados"
+    on public.dice_results
+    for all
+    to anon
+    using (true)
+    with check (true);
   end if;
 end $$;
-
