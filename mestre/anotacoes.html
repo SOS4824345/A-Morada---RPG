@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Anotações de Alice · Mestre</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+</head>
+<body class="hub-page master-notes-page" data-page="master-notes">
+  <section class="master-gate" data-master-notes-gate>
+    <form class="gate-card" data-notes-gate-form><p class="kicker">Acesso reservado</p><h1>Anotações</h1><label for="notes-password">Senha</label><input id="notes-password" name="password" type="password" autocomplete="current-password" required><button class="ink-button" type="submit">Entrar</button><p class="status-line" data-notes-gate-state>Consulta reservada do caderno.</p></form>
+  </section>
+
+  <div class="desk wide-desk" data-master-notes-app hidden>
+    <header class="site-header"><a class="site-mark" href="index.html">← Observação 09</a><p class="file-id">Registro reservado 06<br>leitura das anotações</p></header>
+    <main class="sheet master-sheet master-notes-sheet">
+      <header class="master-notes-heading"><div><p class="kicker">Caderno da jogadora</p><h1>Anotações</h1></div><span class="read-only-stamp">Somente leitura</span></header>
+      <section class="control-panel master-notes-filters">
+        <label>Buscar<input type="search" data-master-notes-search placeholder="Título ou conteúdo"></label>
+        <label>Categoria<select data-master-notes-category><option value="ALL">Todas</option><option>GERAL</option><option>PESSOAS</option><option>LUGARES</option><option>SUSPEITAS</option><option>MEMÓRIAS</option><option>PENDÊNCIAS</option></select></label>
+        <label>Mostrar<select data-master-notes-view><option value="ALL">Todas</option><option value="ACTIVE">Ativas</option><option value="FAVORITES">Favoritas</option><option value="PINNED">Fixadas</option><option value="ARCHIVED">Arquivadas</option></select></label>
+      </section>
+      <div class="master-notes-layout">
+        <section class="control-panel"><div class="section-heading"><p class="kicker">Índice</p><h2>Registros</h2></div><div class="master-notes-list" data-master-notes-list><p class="empty-note">Consultando anotações…</p></div></section>
+        <section class="control-panel master-note-reader" data-master-note-reader><div class="section-heading"><p class="kicker">Leitura</p><h2>Selecione uma anotação</h2></div><p class="empty-note">O conteúdo escolhido será exibido aqui sem controles de edição.</p></section>
+      </div>
+      <p class="status-line" data-master-notes-state aria-live="polite"></p>
+    </main>
+  </div>
+  <script src="../shared/config.js"></script><script src="../shared/notes.js"></script>
+</body>
+</html>
