@@ -1,1 +1,54 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Documentos · Mestre</title><link rel="stylesheet" href="../shared/styles.css"></head><body class="hub-page"><main class="sheet master-sheet placeholder-sheet"><a class="back-link" href="index.html">← Voltar à observação</a><section class="placeholder-content"><p class="kicker">Registro reservado 04</p><h1>Documentos</h1><span class="empty-stamp">Em preparação</span><p>O controle de documentos será criado em uma etapa futura.</p></section></main></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Documentos · Mestre</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+</head>
+<body class="hub-page master-documents-page" data-page="master-documents">
+  <section class="master-gate" data-master-documents-gate>
+    <form class="gate-card" data-documents-gate-form>
+      <p class="kicker">Acesso reservado</p><h1>Documentos</h1>
+      <label for="documents-password">Senha</label><input id="documents-password" name="password" type="password" autocomplete="current-password" required>
+      <button class="ink-button" type="submit">Entrar</button>
+      <p class="status-line" data-documents-gate-state>Controle reservado do arquivo.</p>
+    </form>
+  </section>
+
+  <div class="desk wide-desk" data-master-documents-app hidden>
+    <header class="site-header"><a class="site-mark" href="index.html">← Observação 09</a><p class="file-id">Registro reservado 04<br>controle de documentos</p></header>
+    <main class="sheet master-sheet master-documents-sheet">
+      <header class="master-documents-heading"><div><p class="kicker">Arquivo documental</p><h1>Documentos</h1></div><p>Criação, páginas e revelação gradual para Alice.</p></header>
+
+      <section class="control-panel document-create-panel">
+        <div class="section-heading"><p class="kicker">Novo registro</p><h2>Criar documento</h2></div>
+        <form class="document-admin-form" data-master-document-create-form>
+          <fieldset><legend>Dados gerais</legend>
+            <label>Título<input name="title" required maxlength="160"></label>
+            <label>Categoria<select name="category"><option>CARTA</option><option>BILHETE</option><option>RELATÓRIO</option><option>DIÁRIO</option><option>RECORTE</option><option>REGISTRO</option><option>PÁGINA</option><option>FOTOGRAFIA</option><option selected>OUTRO</option></select></label>
+            <label>Local encontrado<input name="found_location" maxlength="160"></label>
+            <label>Data do documento<input name="document_date" type="date"></label>
+            <label class="wide-field">Resumo visível<textarea name="visible_summary" maxlength="1200"></textarea></label>
+            <label>Status<select name="status"><option selected>OCULTO</option><option>REVELADO</option><option>INCOMPLETO</option><option>COMPLETO</option></select></label>
+          </fieldset>
+          <fieldset><legend>Controle</legend>
+            <label>Ordem geral<input name="sort_order" type="number" value="0" required></label>
+            <label class="wide-field">Notas privadas do Mestre<textarea name="master_notes" maxlength="3000"></textarea></label>
+            <label class="document-check"><input name="is_visible" type="checkbox"> Visível para Alice</label>
+          </fieldset>
+          <div class="document-form-footer"><button class="ink-button" type="submit">Criar documento</button><p class="status-line" data-master-document-state></p></div>
+        </form>
+      </section>
+
+      <div class="master-documents-layout">
+        <section class="control-panel"><div class="section-heading"><p class="kicker">Todos os registros</p><h2>Arquivo</h2></div><div class="master-document-list" data-master-document-list><p class="empty-note">Nenhum documento registrado.</p></div></section>
+        <section class="control-panel master-document-editor" data-master-document-editor><div class="section-heading"><p class="kicker">Edição</p><h2>Selecione um documento</h2></div><p class="empty-note">Os dados gerais e as páginas serão exibidos aqui.</p></section>
+      </div>
+
+      <section class="control-panel document-safe-preview"><div class="section-heading"><p class="kicker">Prévia filtrada</p><h2>Visão da Alice</h2></div><div data-master-document-preview><p class="empty-note">Selecione um documento para conferir somente os campos públicos.</p></div></section>
+    </main>
+  </div>
+  <script src="../shared/config.js"></script><script src="../shared/documents.js"></script>
+</body>
+</html>

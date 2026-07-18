@@ -1,1 +1,41 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Documentos · A Morada</title><link rel="stylesheet" href="../shared/styles.css"></head><body class="hub-page"><main class="sheet placeholder-sheet"><a class="back-link" href="index.html">← Voltar ao arquivo</a><section class="placeholder-content"><p class="kicker">Arquivo 04</p><h1>Documentos</h1><span class="empty-stamp">Nenhum registro</span><p>Os documentos encontrados em Viksdal aparecerão aqui.</p></section></main></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Documentos de Mannon · A Morada</title>
+  <link rel="stylesheet" href="../shared/styles.css">
+</head>
+<body class="hub-page alice-theme alice-documents-page" data-page="alice-documents">
+  <div class="desk wide-desk">
+    <header class="site-header"><a class="site-mark" href="index.html">← Arquivo de Alice</a><p class="file-id">Documentos de Mannon<br>registros revelados</p></header>
+    <main class="sheet document-archive-sheet">
+      <header class="document-archive-heading">
+        <div><p class="kicker">Arquivo pessoal · registro 04</p><h1>Documentos</h1><p>Consulte apenas os registros já revelados.</p></div>
+        <div class="document-filters">
+          <label>Categoria<select data-document-category-filter><option value="ALL">Todas</option><option>CARTA</option><option>BILHETE</option><option>RELATÓRIO</option><option>DIÁRIO</option><option>RECORTE</option><option>REGISTRO</option><option>PÁGINA</option><option>FOTOGRAFIA</option><option>OUTRO</option></select></label>
+          <label>Buscar<input type="search" data-document-search placeholder="Título do documento"></label>
+        </div>
+      </header>
+
+      <div class="document-archive-layout">
+        <aside class="document-list-panel" aria-labelledby="document-list-title">
+          <div class="document-panel-label"><span>ARQUIVO</span><span data-document-count>00</span></div>
+          <h2 id="document-list-title" class="sr-only">Documentos revelados</h2>
+          <div class="document-list" data-document-list><p class="document-empty">Consultando registros…</p></div>
+        </aside>
+        <section class="document-reader-panel" data-document-reader aria-live="polite">
+          <div class="document-reader-empty"><span aria-hidden="true">◇</span><h2>Nenhum documento selecionado</h2><p>Escolha um registro do arquivo para iniciar a leitura.</p></div>
+        </section>
+      </div>
+      <p class="status-line document-sync-state" data-document-state aria-live="polite">Sincronizando arquivo…</p>
+    </main>
+  </div>
+
+  <dialog class="document-image-dialog" data-document-image-dialog>
+    <button type="button" data-close-document-image aria-label="Fechar imagem ampliada">Fechar ×</button>
+    <img data-document-dialog-image alt="">
+  </dialog>
+  <script src="../shared/config.js"></script><script src="../shared/documents.js"></script>
+</body>
+</html>
